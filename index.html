@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Choose Your Story Adventure</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4f8;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      margin-bottom: 2rem;
+    }
+    .story-button {
+      padding: 1rem 2rem;
+      margin: 1rem;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    .story-button:hover {
+      background-color: #0056b3;
+    }
+    #story-container {
+      margin-top: 2rem;
+    }
+    #image {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    #summary {
+      margin-top: 2rem;
+      text-align: left;
+      padding: 1rem;
+      background: white;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎭 Choose a Story Type</h1>
+  <div id="story-selection">
+    <button class="story-button" onclick="startStory('confusingForest')">Confusing Forest</button>
+    <button class="story-button" onclick="startStory('trippyDream')">Trippy Dream</button>
+  </div>
+
+  <div id="story-container"></div>
+  <div id="summary"></div>
+  <audio id="bgm" loop autoplay></audio>
+  <audio id="click-sound">
+    <source src="https://www.fesliyanstudios.com/play-mp3/6679" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const stories = {
+      confusingForest: {
+        start: {
+          text: "You wake up in a forest. The trees are whispering in riddles. Do you follow the echo or stay put?",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+          audio: "https://www.fesliyanstudios.com/play-mp3/387",
+          choices: [
+            { text: "Follow the echo", next: "echoPath" },
+            { text: "Stay put", next: "circleBack" }
+          ]
+        },
+        echoPath: {
+          text: "You follow the echo to a glade with seven identical paths, each marked with a different cryptic rune.",
+          image: "https://images.unsplash.com/photo-1534081333815-ae5019106621",
+          choices: [
+            { text: "Take the path with the spiral rune", next: "spiralPath" },
+            { text: "Choose the rune of the eye", next: "eyePath" }
+          ]
+        },
+        circleBack: {
+          text: "Time loops. You wake up again. The whispering intensifies. Did you ever leave the spot?",
+          image: "https://images.unsplash.com/photo-1604021891765-0a8b94f62adf",
+          choices: [
+            { text: "Shout for help", next: "shoutHelp" },
+            { text: "Run in a random direction", next: "spiralPath" }
+          ]
+        },
+        spiralPath: {
+          text: "The spiral leads you through shadowy illusions. Was that your past self you just passed?",
+          image: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70",
+          choices: [
+            { text: "Ignore and continue", next: "portal" },
+            { text: "Talk to your reflection", next: "talkSelf" }
+          ]
+        },
+        eyePath: {
+          text: "The eye watches. You are now being followed by something you can't see. The air grows heavy.",
+          image: "https://images.unsplash.com/photo-1558980664-10d3b103f0f8",
+          choices: [
+            { text: "Hide behind a tree", next: "portal" },
+            { text: "Run blindly", next: "loopEnd" }
+          ]
+        },
+        shoutHelp: {
+          text: "Your shout echoes forever, never ending. Time bends. You see flashes of yourself, older, younger, weeping, laughing.",
+          image: "https://images.unsplash.com/photo-1482062364825-616fd23b8fc1",
+          choices: [
+            { text: "Laugh back", next: "talkSelf" },
+            { text: "Cover your ears", next: "loopEnd" }
+          ]
+        },
+        talkSelf: {
+          text: "Your reflection speaks in riddles. 'The more you know, the less you see.' Are you dreaming or being dreamed of?",
+          image: "https://images.unsplash.com/photo-1604917877936-4b0bb29f4f26",
+          choices: [
+            { text: "Accept the dream", next: "end" },
+            { text: "Reject it", next: "portal" }
+          ]
+        },
+        portal: {
+          text: "A portal opens. Reality fractures. You are everyone, and no one. Light collapses into a single point.",
+          image: "https://images.unsplash.com/photo-1499244571948-7ccddb3583f1",
+          choices: [
+            { text: "Step through", next: "end" }
+          ]
+        },
+        loopEnd: {
+          text: "The forest resets. You remember everything, but nothing makes sense anymore. You feel peace in confusion.",
+          image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+          choices: [
+            { text: "Accept fate", next: "end" }
+          ]
+        },
+        end: {
+          text: "The story ends — or begins again. The forest lives on, and so does your memory of it. 🌲✨",
+          image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+          choices: []
+        }
+      },
+      trippyDream: {
+        start: {
+          text: "You fall asleep and instantly begin dreaming. A floating jellyfish offers you a lollipop. Reality is melting.",
+          image: "https://images.unsplash.com/photo-1533055640609-d1c53b9a7d86",
+          audio: "https://www.fesliyanstudios.com/play-mp3/6023",
+          choices: [
+            { text: "Take the lollipop", next: "colorMaze" },
+            { text: "Refuse politely", next: "endlessTrain" }
+          ]
+        },
+        colorMaze: {
+          text: "You are inside a maze made entirely of neon colors. The walls change when you blink. A unicorn speaks in binary.",
+          image: "https://images.unsplash.com/photo-1502136969935-8d8eef54d77a",
+          choices: [
+            { text: "Decode the unicorn's message", next: "binaryReveal" },
+            { text: "Follow a glowing snail", next: "snailRide" }
+          ]
+        },
+        endlessTrain: {
+          text: "You’re on a train with infinite windows showing alternate versions of yourself. A penguin offers you tea.",
+          image: "https://images.unsplash.com/photo-1523430410476-4f3011b96b27",
+          choices: [
+            { text: "Drink the tea", next: "teaTime" },
+            { text: "Jump out the window", next: "freefall" }
+          ]
+        },
+        binaryReveal: {
+          text: "The unicorn's message translates to: 'You are the dreamer and the dream.' You begin to float.",
+          image: "https://images.unsplash.com/photo-1497089243934-9e56c1d0a24d",
+          choices: [
+            { text: "Fly upwards", next: "end" }
+          ]
+        },
+        snailRide: {
+          text: "The snail takes you to a donut planet orbiting a rainbow sun. You feel incredibly relaxed.",
+          image: "https://images.unsplash.com/photo-1519638399535-1b036603ac77",
+          choices: [
+            { text: "Eat the planet", next: "end" }
+          ]
+        },
+        teaTime: {
+          text: "You sip the tea and understand the universe for 3.2 seconds. Then everything becomes toast.",
+          image: "https://images.unsplash.com/photo-1589440364545-62f82328c010",
+          choices: [
+            { text: "Accept toast reality", next: "end" }
+          ]
+        },
+        freefall: {
+          text: "You fall into a pool of stars. They whisper secrets of galaxies. You wake up with glitter on your pillow.",
+          image: "https://images.unsplash.com/photo-1517511620798-cec17d428bc0",
+          choices: [
+            { text: "Smile and go back to sleep", next: "end" }
+          ]
+        },
+        end: {
+          text: "The dream fades but the strangeness lingers. Reality never looked the same again. ✨🌀",
+          image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+          choices: []
+        }
+      }
+    };
+
+    let currentStory = null;
+    let storyLog = [];
+
+    function startStory(type) {
+      currentStory = stories[type];
+      storyLog = [];
+      document.getElementById('bgm').src = currentStory.start.audio || '';
+      document.getElementById('summary').innerHTML = '';
+      showNode('start');
+    }
+
+    function showNode(key) {
+      const node = currentStory[key];
+      const container = document.getElementById('story-container');
+      container.innerHTML = `
+        <img id="image" src="${node.image}" alt="Scene">
+        <p>${node.text}</p>
+        <div id="choices"></div>
+      `;
+
+      storyLog.push(node.text);
+      const choicesDiv = document.getElementById('choices');
+      const clickSound = document.getElementById('click-sound');
+
+      if (node.choices.length === 0) {
+        showSummary();
+        return;
+      }
+
+      node.choices.forEach(choice => {
+        const btn = document.createElement('button');
+        btn.className = 'story-button';
+        btn.textContent = choice.text;
+        btn.onclick = () => {
+          clickSound.play();
+          storyLog.push("You chose: " + choice.text + ".");
+          showNode(choice.next);
+        };
+        choicesDiv.appendChild(btn);
+      });
+    }
+
+    function showSummary() {
+      const paragraph = storyLog.join(" ");
+      document.getElementById('summary').innerHTML = `
+        <h2>Your Story Recap</h2>
+        <p>${paragraph}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
