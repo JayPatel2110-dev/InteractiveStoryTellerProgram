@@ -1,0 +1,144 @@
+/* LIGHT MODE (DEFAULT) */
+body {
+    background: linear-gradient(to right, #d9a7c7, #fffcdc);
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+  
+  .container {
+    max-width: 700px;
+    margin: 60px auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 2em;
+  }
+  
+  .subtext {
+    text-align: center;
+    margin-bottom: 30px;
+    font-style: italic;
+    color: #666;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-top: 20px;
+    display: block;
+  }
+  
+  select, textarea {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  button {
+    display: inline-block;
+    background-color: #ff69b4;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 12px 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #ff3f9e;
+  }
+  
+  #output {
+    margin-top: 30px;
+  }
+  
+  #storyContent {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 10px;
+    white-space: pre-wrap;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+  }
+  
+  /* DARK MODE - Better UI with dual-tone */
+  body.dark-mode {
+    background: linear-gradient(to right, #1f1c2c, #928dab);
+    color: #f0f0f0;
+  }
+  
+  .dark-mode .container {
+    background: #2d2a3f;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    color: #eaeaea;
+  }
+  
+  .dark-mode h1 {
+    color: #ffffff;
+    text-shadow: 1px 1px 5px #7f7fd5;
+  }
+  
+  .dark-mode .subtext {
+    color: #dcdcdc;
+  }
+  
+  .dark-mode select,
+  .dark-mode textarea {
+    background-color: #3c3748;
+    color: #f0f0f0;
+    border: 1px solid #6e6a82;
+  }
+  
+  .dark-mode button {
+    background-color: #7f7fd5;
+    color: white;
+    border: none;
+    box-shadow: 0 0 8px rgba(127, 127, 213, 0.4);
+  }
+  
+  .dark-mode button:hover {
+    background-color: #5c5ac8;
+    box-shadow: 0 0 12px rgba(127, 127, 213, 0.6);
+  }
+  
+  .dark-mode #storyContent {
+    background-color: #403c52;
+    border: 1px solid #6e6a82;
+    color: #f0f0f0;
+  }
+  
+  /* Optional: Glowing button animation */
+  @keyframes glow {
+    0% {
+      box-shadow: 0 0 5px #7f7fd5;
+    }
+    50% {
+      box-shadow: 0 0 15px #7f7fd5;
+    }
+    100% {
+      box-shadow: 0 0 5px #7f7fd5;
+    }
+  }
+  
+  .dark-mode button:hover {
+    animation: glow 1s infinite alternate;
+  }
+  
